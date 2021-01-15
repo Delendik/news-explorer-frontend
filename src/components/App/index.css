@@ -1,0 +1,43 @@
+.page{
+  font-family: Inter, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  min-height: 100vh;
+  background: #F5F6F7;
+}
+
+.page__container{
+  min-height: 100vh;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.page__background_main{
+  background-image: url('../../images/background.jpg');
+  background-repeat: no-repeat;
+  transition: all 0.5s ease-in;
+}
+
+.page__withoutbackground{
+  background-image: none;
+}
+
+@media only screen and (max-width:1300px){  
+  .page__container{
+    max-width: 768px;
+  }
+
+  .page__background_main{
+    background-image: url('../../images/background_tablet.jpg');
+  }
+}
+
+@media only screen and (max-width:500px){
+  .page__container{
+    max-width: 320px;
+  }
+
+  .page__background_main{
+    background-image: url('../../images/background_mobile.jpg');
+  }
+}

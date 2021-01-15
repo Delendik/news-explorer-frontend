@@ -1,0 +1,146 @@
+.search-form{
+  position: relative;
+  margin-top: 64px;
+}
+.search-form__container{
+  box-sizing: border-box;
+  border-radius: 100px;
+  min-height: 64px;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  width: 608px;
+}
+
+.searh-form__input{
+  height: 25px;
+  margin-left: 24px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: #1A1B22;
+  border: none;
+  outline:none;
+  width: 376px;
+  padding: 0;
+}
+
+.searh-form__button{
+  background: #2F71E5;
+  border: none;
+  border-radius: 100px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: #FFFFFF;
+  min-height: 64px;
+  width: 168px;
+  position: absolute;
+  right: 0;
+}
+
+@-webkit-keyframes transparency{
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0.9;
+  }
+}
+
+@keyframes transparency{
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0.9;
+  }
+}
+
+.searh-form__button:hover{
+  cursor: url('../../images/lapka.svg'), pointer;
+  -webkit-animation: transparency 1s linear 1 forwards;
+          animation: transparency 1s linear 1 forwards;
+}
+
+.searh-form__button:active{
+  background: #2A65CC;
+}
+
+.searh-form__button:disabled{
+  background: #E6E8EB;
+  color: #B6BCBF;
+  cursor: not-allowed;
+}
+
+.searh-form__input::-webkit-input-placeholder{
+  color: #B6BCBF;
+}
+
+.searh-form__input::-moz-placeholder{
+  color: #B6BCBF;
+}
+
+.searh-form__input:-ms-input-placeholder{
+  color: #B6BCBF;
+}
+
+.searh-form__input::-ms-input-placeholder{
+  color: #B6BCBF;
+}
+
+.searh-form__input::placeholder{
+  color: #B6BCBF;
+}
+
+@media only screen and (max-width:1300px){
+  .searh-form__button{
+    width: 160px;
+    min-height: 56px;
+  }
+
+  .search-form__container{
+    width: 452px;
+    min-height: 56px;
+  }
+
+  .search-form{
+    margin-top: 48px;
+  }
+
+  .searh-form__input{
+    width: 228px;
+  }
+}
+
+@media only screen and (max-width:500px){
+  .searh-form__button{
+    width: 288px;
+  }
+
+  .search-form{
+    margin-top: 122px;
+  }
+
+  .searh-form__input{
+    width: 252px;
+    margin-left: 16px;
+  }
+  
+  .search-form__container{
+    position: relative;
+    flex-direction: column;
+    width: 288px;
+    justify-content: center;
+  }
+  .searh-form__button{
+    position: relative;
+    margin-top: 16px;
+    padding: 0;
+  }
+}
