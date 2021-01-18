@@ -1,0 +1,231 @@
+.card__container{
+  max-width: 400px;
+  height: 576px;
+}
+
+.card__up{
+  height: 272px;
+  position: relative;
+}
+
+.card__picture{
+  border-radius: 15px 15px 0 0;
+  background-size: cover;
+  width: 400px;
+  height: 272px;
+}
+
+.card__down{
+  height: 304px;
+  border-radius: 0 0 15px 15px;
+  background: #FFFFFF;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.card__mark{
+  height: 40px;
+  width: 40px;
+  border-radius: 8px;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: #FFFFFF;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.card__unmarked{
+  background-image: url(../../images/icon/mark_normal.svg);
+}
+
+.card__marked{
+  background-image: url(../../images/icon/mark_marked.svg);
+}
+
+.card__date{
+  margin: 0;
+  padding: 20px 0 12px;
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+  color: #B6BCBF;
+}
+
+.card__title{
+  margin: 0;
+  width: 352px;
+  font-family: Roboto Slab;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: 30px;
+  color: #1A1B22;
+  overflow: hidden;
+  display: -webkit-box; 
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; 
+}
+
+.card__text{
+  margin: 0;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: #1A1B22;
+  padding-top: 16px;
+  overflow: hidden;
+  display: -webkit-box; 
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical; 
+}
+
+.card__link{
+  position: absolute;
+  bottom: 24px;
+  font-family: Roboto Slab;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  color: #B6BCBF;
+  text-decoration: none;
+}
+
+.card__saveInfo{
+  height: 40px;
+  width: 182px;
+  border-radius: 10px;
+  position: absolute;
+  top: 24px;
+  right: 69px;
+  background-color: #FFFFFF;
+  align-items: center;
+  justify-content: center;
+}
+
+.card__saveTitle{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 12px;
+  color: #000000;
+}
+
+@-webkit-keyframes transparency{
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0.9;
+  }
+}
+
+@keyframes transparency{
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0.9;
+  }
+}
+
+.card__link:hover, .card__mark:hover, .card__marked:hover{
+  cursor: url('../../images/lapka.svg'), pointer;
+  -webkit-animation: transparency 1s linear 1 forwards;
+          animation: transparency 1s linear 1 forwards;
+}
+
+.card__unmarked:hover{
+  background-image: url(../../images/icon/mark_hover.svg);
+}
+
+@media only screen and (max-width:1300px){
+  .card__container{
+    max-width: 224px;
+    height: 420px;
+  }
+
+  .card__up{
+    height: 150px;
+  }
+
+  .card__picture{
+    height: 150px;
+    max-width: 224px;
+  }
+
+  .card__down{
+    height: 270px;
+    padding: 0 16px;
+  }
+
+  .card__date{
+    padding-top: 16px;
+  }
+
+  .card__title{
+    max-width: 192px;
+    font-size: 22px;
+    line-height: 24px;
+  }
+
+  .card__text{
+    padding-top: 10px;
+    -webkit-line-clamp: 4;
+  }
+
+  .card__link{
+    bottom: 16px;
+  }
+
+  .card__saveInfo{
+    visibility: hidden;
+  }
+}
+
+@media only screen and (max-width:500px){
+  .card__container{
+    max-width: 288px;
+    height: 440px;
+  }
+
+  .card__up{
+    height: 196px;
+  }
+
+  .card__picture{
+    height: 196px;
+    max-width: 288px;
+  }
+
+  .card__down{
+    height: 244px;
+  }
+
+  .card__date{
+    padding-bottom: 10px;
+  }
+  
+  .card__title{
+    max-width: 256px;
+    line-height: 26px;
+  }
+
+  .card__text{
+    -webkit-line-clamp: 3;
+  }
+
+  .card__link{
+    bottom: 17px;
+  }
+}

@@ -1,0 +1,117 @@
+.footer__container{
+  display: flex;
+  min-height: 80px;
+  align-items: center;
+  margin: 0 104px;
+  justify-content: space-between;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.footer__copyright{
+  font-size: 16px;
+  line-height: 22px;
+  color: #B6BCBF;
+  margin: 0;
+}
+
+.footer__links{
+  display: flex;
+}
+
+.footer__link{
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
+  color: #1A1B22;
+  padding: 0 18px;
+}
+
+.footer__logo{
+  width: 24px;
+  height: 24px;
+}
+
+.footer__logoLink_first{
+  margin-left: 40px;
+}
+
+.footer__logoLink_last{
+  margin-left: 24px;
+}
+
+@-webkit-keyframes transparency{
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0.9;
+  }
+}
+
+@keyframes transparency{
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0.9;
+  }
+}
+
+.footer__link:hover, .footer__logo:hover{
+  cursor: url('../../images/lapka.svg'), pointer;
+  -webkit-animation: transparency 1s linear 1 forwards;
+          animation: transparency 1s linear 1 forwards;
+}
+
+@media only screen and (max-width:1300px){
+  .footer__container{
+    margin: 0 40px;
+    min-height: 64px;
+  }
+
+  .footer__link{
+    padding: 0 10px;
+  }
+
+  .footer__logoLink_first{
+    margin-left: 24px;
+  }
+  .footer__logo{
+    border-radius: 50%;
+  }
+}
+
+@media only screen and (max-width:750px){
+  .footer__container{
+    margin: 20px 16px 22px;
+    flex-direction: column-reverse;
+  }
+}
+
+@media only screen and (max-width:430px){
+  .footer__container{
+    min-height: 176px;
+  }
+
+  .footer__mainLinks{
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer__link{
+    line-height: 48px;
+  }
+
+  .footer__logoLink_first{
+    margin-left: 16px;
+  }
+
+  .footer__logo{
+    border-radius: 0;
+  }
+}

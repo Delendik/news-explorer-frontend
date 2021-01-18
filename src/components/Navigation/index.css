@@ -1,0 +1,34 @@
+.navigation{
+  display: flex;
+  align-items: center;
+}
+
+.navigation__burger{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media only screen and (max-width:620px){
+  .navigation{
+    display: none;
+  }
+
+  .navigation__burger{
+    position: absolute;
+    top: 66px;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #1A1B22;
+    border-radius:  0 0 16px 16px;
+    box-sizing: border-box;
+    padding: 15px 16px 0;
+  }
+
+  .navigation__burger_saved{
+    background:#F5F6F7;
+  }
+}
