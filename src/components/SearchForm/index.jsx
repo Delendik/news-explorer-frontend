@@ -8,12 +8,20 @@ function SearchForm({onClick}){
     setSearchText(e.target.value);
   }
 
+  const onFocus =()=> {
+    setSearchText(true)
+  }
+
+  const onBlur =()=> {
+    setSearchText(false)
+  }
+  
   return(
     <div className="search-form">
       <div className="search-form__container">
-        <input className="searh-form__input" placeholder="Введите тему новости" onChange={handleChange}></input>
+        <input className="searh-form__input" placeholder="Введите тему новости" required onChange={handleChange} onFocus={onFocus} onBlur={onBlur}></input>
       </div>
-      <button className="searh-form__button" onClick = {onClick}> Искать </button>
+      <button className={searchText ? "searh-form__button searh-form__button_active" : "searh-form__button"} onClick = {onClick}> Искать </button>
     </div>
     
   )

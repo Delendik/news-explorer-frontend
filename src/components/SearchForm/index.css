@@ -44,6 +44,10 @@
   right: 0;
 }
 
+.searh-form__button_active{
+  background: #2A65CC;
+}
+
 @-webkit-keyframes transparency{
   from{
     opacity: 1;
