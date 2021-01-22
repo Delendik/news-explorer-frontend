@@ -11,7 +11,9 @@ import SavedNewsHeader from '../SavedNewsHeader';
 import Login from '../Login';
 import Register from '../Register';
 import PopupSuccesRegister from '../PopupSuccesRegister';
+import PopupError from '../PopupError';
 import Preloader from '../Preloader';
+import api from '../../utils/NewsApi';
 
 function App() {
   const [loginIn, setLoginIn] = useState(false);
@@ -21,14 +23,74 @@ function App() {
   const [isOpenRegister, setIsOpenRegister] = useState(false);
   const [successRegister, setSuccessRegister] = useState(false);
   const [openBurger, setOpenBurger] = useState(false);
-  
+  const [successError, setSuccessError] = useState(false);
+  const [text, setText] = useState('');
+  const [cards, setCards] =  useState([]);
+
+  var today = new Date();
+  let formatter = new Intl.DateTimeFormat("ru", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+
+  console.log(formatter.format(today))
+  // useEffect(()=>{
+  //   Promise.all([ 
+  //     api.getCards(text) 
+  //   ]) 
+  //   .then( 
+  //     json=>{ 
+  //       console.log('json', json.0.articles)
+  //       const [data] = json; 
+  //       const items = data.map(item => ({ 
+  //         link: item.link,
+  //         likes: item.likes,
+  //         name: item.name,
+  //         _id:item._id,
+  //         owner:item.owner
+  //         })) 
+  //         setCards(items) 
+  //       }
+  //   )
+  //   .catch((err) => { 
+  //     console.log(err);  
+  //   }); 
+  // }, [text])
+
+  const CheckText = (searchText) =>{
+    setText(searchText)
+    console.log('searchText', searchText)
+    if(!searchText.length){
+      setSuccessError(true);
+    }
+  }
+
+  const handleClick = () =>{
+    setCards([])
+    console.log('text', text)
+    api.getCards(text).then((cards) => {
+      console.log('cards:', cards.articles);
+      const items = cards.articles.map(item => ({
+        title: item.title, 
+        text:item.description,
+        date:item.publishedAt, 
+        source:item.source.name, 
+        link:item.url, 
+        image:item.urlToImage
+      }))
+      setCards(items)
+      setDisplayCard(true);
+    })
+  }  
+
   const handleClickMenu = () =>{
     setOpenBurger(!openBurger);
   }
 
-  const handleClick = () =>{
-    setDisplayCard(true);
-  };
+  // const handleClick = () =>{
+  //   setDisplayCard(true);
+  // };
 
   const handleLogin = () =>{
     setLoginIn(true);
@@ -66,6 +128,7 @@ function App() {
     setIsOpenLogin(false);
     setIsOpenRegister(false);
     setSuccessRegister(false);
+    setSuccessError(false);
   }
 
   const handleSuccessRegister = () =>{
@@ -89,6 +152,12 @@ function App() {
       <div  className="page__container">
         <Preloader />
         
+        <PopupError
+          text="Нужно ввести ключевое слово" 
+          closePopup={closePopup}
+          successError={successError}
+        />
+
         <Login 
           isOpenLogin={isOpenLogin}
           handlePopupRegister={handlePopupRegister}
@@ -123,8 +192,8 @@ function App() {
               handleClickMenu={handleClickMenu}
               openBurger={openBurger}
             />
-            <Main onClick = {handleClick}/>
-            <NewsCardList displayCard = {displayCard} loginIn={loginIn}  />
+            <Main onClick = {handleClick} CheckText={CheckText} />
+            <NewsCardList displayCard = {displayCard} loginIn={loginIn} cards={cards} />
             <About />
           </div>
         </Route>

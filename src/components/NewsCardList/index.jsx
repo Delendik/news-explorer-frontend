@@ -5,21 +5,24 @@ import NewCard from '../NewsCard';
 import SavedCard from '../SavedCard';
 import MoreCardsButton from '../MoreCardsButton';
 
-function NewsCardList({displayCard, loginIn, savedNews}){
+function NewsCardList({displayCard, loginIn, savedNews, cards}){
   const [numberForDisplay, setNumberForDisplay] = useState(3);
   const handleClick = () =>{
     setNumberForDisplay(numberForDisplay + 3);
   }
-  const cardsForDisplay = initialCards.slice(0, numberForDisplay);
 
-  const savedCards = initialCards.filter(card => card.marked)
+  console.log('cards from cardlist', cards);
+
+  const cardsForDisplay = cards.slice(0, numberForDisplay);
+
+  const savedCards = cards.filter(card => card.marked)
 
   if(savedNews){
     return(
       <div className="newCardList__container newCardList__container_saved">
         <ul className="newCardList__table newCardList__table_saved">
           {
-            savedCards.map(card => <SavedCard key={card._id} {...card} loginIn={loginIn} savedNews={savedNews} />) 
+            savedCards.map(card => <SavedCard key={card.author} {...card} loginIn={loginIn} savedNews={savedNews} />) 
           }
         </ul>
       </div>
@@ -30,7 +33,7 @@ function NewsCardList({displayCard, loginIn, savedNews}){
         <h2 className="newCardList__title">Результаты поиска</h2>
         <ul className="newCardList__table">
           {
-            cardsForDisplay.map(card => <NewCard key={card._id} {...card} loginIn={loginIn}  />) 
+            cardsForDisplay.map(card => <NewCard key={card.author} {...card} loginIn={loginIn}  />) 
           }
         </ul>
         <MoreCardsButton onClick = {handleClick} />

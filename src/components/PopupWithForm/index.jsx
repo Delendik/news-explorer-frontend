@@ -35,10 +35,11 @@ function PopupWithForm({title, buttonName, onClick, childrenLink, closePopup, ch
             placeholder="Введите почту"
             value={email} 
             className="popup__input" 
-            id="name-input" 
+            id="email-input" 
             required 
             minLength="2" 
             maxLength="30" 
+            autoComplete="off"
             onChange={handleChangeEmail} 
           />
           <span className="popup__input_error" id="email-input-error"></span>
@@ -48,10 +49,11 @@ function PopupWithForm({title, buttonName, onClick, childrenLink, closePopup, ch
             placeholder="Введите пароль"
             value={password} 
             className="popup__input" 
-            id="email-input" 
+            id="password-input" 
             required 
             minLength="2" 
             maxLength="30" 
+            autoComplete="off"
             onChange={handleChangePassowrd} 
           />
           {children}
