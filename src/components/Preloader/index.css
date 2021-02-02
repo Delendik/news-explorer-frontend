@@ -6,7 +6,12 @@
 	background-color: #333;
   overflow: hidden;
   position: absolute;
-  z-index: 10;
+	z-index: 10;
+	visibility: hidden;
+}
+
+.preloader__container_visible{
+	visibility: visible;
 }
 
 .circle-preloader {

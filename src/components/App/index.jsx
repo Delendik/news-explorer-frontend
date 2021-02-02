@@ -1,5 +1,5 @@
 import {React, useState, useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 import './index.css';
 import Header from '../Header';
 import Main from '../Main';
@@ -13,84 +13,169 @@ import Register from '../Register';
 import PopupSuccesRegister from '../PopupSuccesRegister';
 import PopupError from '../PopupError';
 import Preloader from '../Preloader';
-import api from '../../utils/NewsApi';
+import apiNews from '../../utils/NewsApi';
+import * as MainApi from '../../utils/MainApi';
+import { getToken, removeToken } from '../../utils/token';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { getLocalCards, setLocalCards } from '../../utils/cards';
 
 function App() {
   const [loginIn, setLoginIn] = useState(false);
-  const [displayCard, setDisplayCard] = useState(false);
   const [savedNews, setSavedNews] = useState(false);
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [isOpenRegister, setIsOpenRegister] = useState(false);
   const [successRegister, setSuccessRegister] = useState(false);
   const [openBurger, setOpenBurger] = useState(false);
   const [successError, setSuccessError] = useState(false);
-  const [text, setText] = useState('');
-  const [cards, setCards] =  useState([]);
+  // const [cardsAfterRestart, setCardsAfterRestart] = useState([]);
+  const cardsAfterRestart = (getLocalCards());
+  const [cards, setCards] =  useState(cardsAfterRestart);
+  const [displayCard, setDisplayCard] = useState(cardsAfterRestart.length>1 ? true : false);
+  const [loadind, setLoading] = useState(false);
+  const [savedCards, setSavedCards] = useState([]);
+  const [currentUser, setCurrentUser] = useState('');
+  const [keyword, setKeyword] = useState('');
+
+  const history = useHistory();
+
+  console.log('testCards', cards);
+
+  const unique = [...new Map(cards.map(item => [item['id'], item])).values()]
+
+  console.log('unique', unique);
+  const checkToken = () =>{
+    const token = getToken();
+    if(!token){
+      return;
+    }
+    return token;
+  }
+
+  const token = checkToken();
+
+
+
+  useEffect(() =>{
+    checkToken();
+  }, []);
+
+  useEffect(() =>{
+    MainApi.getUserInfo(token)
+    .then((res) =>{
+      if(res){
+        setLoginIn(true);
+        setCurrentUser(res);
+        history.push('/');
+      }
+    })
+    .catch(err => {
+      if(err.status===401){
+        console.log("Токен не передан или передан не в том формате");
+      } else {
+        console.log("ошибка на сервере");
+      }
+    });
+
+    MainApi.getCards(token)
+    .then((res) =>{
+      if(res){
+        setSavedCards(res);
+      }
+    })
+    .catch(err => {
+      if(err.status===401){
+        console.log("Токен не передан или передан не в том формате");
+      } else {
+        console.log("ошибка на сервере");
+      }
+    });
+  }, [])
+  
+  const onRegister = ({email, password, name}) =>{
+    setLoading(true);
+    MainApi.register({email, password, name})
+    .then((res) => {
+      if(res){
+        setIsOpenRegister(false);
+        setSuccessRegister(true);
+        history.push('/');
+      } else {
+        setIsOpenRegister(true);
+        history.push('/');
+      }
+    })
+    .catch(err => {
+      setIsOpenRegister(true);
+      if(err.status===400){
+        console.log("Некорректно заполнено одно из полей");
+      } else {
+        console.log("Ошибка на сервере");
+      }
+    })
+    .finally(
+      setLoading(false)
+    )
+  }
+
+  const onLogin = ({email, password}) =>{
+    setLoading(true);
+    
+    MainApi.authorize({email, password})
+    .then((res) => {
+    setLoginIn(true);
+    setIsOpenLogin(false);
+    checkToken();
+    setSuccessRegister(false);
+    })
+    .catch((err) => { 
+      console.log(err); 
+    })
+    .finally(
+      setLoading(false)
+    )
+
+  }
 
   var today = new Date();
-  let formatter = new Intl.DateTimeFormat("ru", {
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  });
-
-  console.log(formatter.format(today))
-  // useEffect(()=>{
-  //   Promise.all([ 
-  //     api.getCards(text) 
-  //   ]) 
-  //   .then( 
-  //     json=>{ 
-  //       console.log('json', json.0.articles)
-  //       const [data] = json; 
-  //       const items = data.map(item => ({ 
-  //         link: item.link,
-  //         likes: item.likes,
-  //         name: item.name,
-  //         _id:item._id,
-  //         owner:item.owner
-  //         })) 
-  //         setCards(items) 
-  //       }
-  //   )
-  //   .catch((err) => { 
-  //     console.log(err);  
-  //   }); 
-  // }, [text])
+  let yearToday = today.getFullYear()
+  let monthToday = (today.getMonth()+1)
+  let dayToday = today.getDate()
+  var to = (yearToday+'-'+monthToday+'-'+dayToday)
+  var beforedate = new Date();
+  beforedate.setDate(beforedate.getDate() - 7);
+  let yearBefore = beforedate.getFullYear()
+  let monthBefore = (beforedate.getMonth()+1)
+  let dayBefore = beforedate.getDate()
+  var from = (yearBefore+'-'+monthBefore+'-'+dayBefore)
 
   const CheckText = (searchText) =>{
-    setText(searchText)
-    console.log('searchText', searchText)
     if(!searchText.length){
       setSuccessError(true);
     }
   }
+  console.log('setLocalCards', cards)
+  useEffect(() => {
+    window.onbeforeunload = () => {
+      
+      setLocalCards(cards);
+    }
+  })
 
-  const handleClick = () =>{
-    setCards([])
-    console.log('text', text)
-    api.getCards(text).then((cards) => {
-      console.log('cards:', cards.articles);
-      const items = cards.articles.map(item => ({
-        title: item.title, 
-        text:item.description,
-        date:item.publishedAt, 
-        source:item.source.name, 
-        link:item.url, 
-        image:item.urlToImage
-      }))
-      setCards(items)
+  const searchNews = async (searchText) =>{
+    setLoading(true);
+    try {
+      const items = await apiNews.getCards(searchText, from, to)
+      setCards(items);
       setDisplayCard(true);
-    })
+      setKeyword(searchText);
+    } catch (error) {
+      console.log(error); 
+    }finally {setLoading(false); console.log(cards)}
   }  
 
   const handleClickMenu = () =>{
     setOpenBurger(!openBurger);
   }
-
-  // const handleClick = () =>{
-  //   setDisplayCard(true);
-  // };
 
   const handleLogin = () =>{
     setLoginIn(true);
@@ -102,6 +187,7 @@ function App() {
   const handleLogout = () =>{
     setLoginIn(false);
     setSavedNews(false);
+    removeToken();
   }
 
   const handleSavedNewsPage = () =>{
@@ -136,6 +222,24 @@ function App() {
     setIsOpenRegister(false);
   }
 
+  const handleAddCard = (card) => {
+    MainApi.addCard(token, card)
+    .then((saveCard) => {
+      setSavedCards([...savedCards, saveCard])
+    })
+  };
+
+  const handleDeleteCard = (_id) => {
+    MainApi.removeCard(token, _id)
+    .then(() => {
+      const newCards = savedCards.filter((c) => c._id !== _id );
+      setSavedCards(newCards);
+    })
+    .catch((err) => { 
+      console.log(err);  
+    }); 
+  }
+
   useEffect(() => {
     const handleEsc = (e) => {
       const ESC_CODE = 'Escape' ;
@@ -148,75 +252,82 @@ function App() {
   }, [])
 
   return (
-    <div className="page" >
-      <div  className="page__container">
-        <Preloader />
-        
-        <PopupError
-          text="Нужно ввести ключевое слово" 
-          closePopup={closePopup}
-          successError={successError}
-        />
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="page" >
+        <div  className="page__container">
+          <Preloader loadind={loadind} />
+          
+          <PopupError
+            text="Нужно ввести ключевое слово" 
+            closePopup={closePopup}
+            successError={successError}
+          />
 
-        <Login 
-          isOpenLogin={isOpenLogin}
-          handlePopupRegister={handlePopupRegister}
-          closePopup={closePopup}
-          onClick={handleLogin}
-        />
-    
-        <Register 
-          isOpenRegister={isOpenRegister}
-          handlePopupLogin={handlePopupLogin}
-          closePopup={closePopup}
-          onClick={handleSuccessRegister}
-        />
+          <Login 
+            isOpenLogin={isOpenLogin}
+            handlePopupRegister={handlePopupRegister}
+            closePopup={closePopup}
+            onClick={handleLogin}
+            onLogin={onLogin}
+          />
+      
+          <Register 
+            isOpenRegister={isOpenRegister}
+            handlePopupLogin={handlePopupLogin}
+            closePopup={closePopup}
+            onClick={handleSuccessRegister}
+            onRegister={onRegister}
+          />
 
-        <PopupSuccesRegister 
-          closePopup={closePopup}
-          successRegister={successRegister}
-          handlePopupLogin={handlePopupLogin}
-        />
+          <PopupSuccesRegister 
+            closePopup={closePopup}
+            successRegister={successRegister}
+            handlePopupLogin={handlePopupLogin}
+          />
 
-        <Route exact path="/">
-          <div  className="page__background_main">
-            <Header 
-              loginIn={loginIn} 
-              handleLogout={handleLogout} 
-              savedNews={savedNews} 
-              handleSavedNewsPage={handleSavedNewsPage}
-              handlePopupLogin={handlePopupLogin}
-              handleMainPage={handleMainPage}
-              isOpenLogin={isOpenLogin}
-              isOpenRegister={isOpenRegister}
-              handleClickMenu={handleClickMenu}
-              openBurger={openBurger}
-            />
-            <Main onClick = {handleClick} CheckText={CheckText} />
-            <NewsCardList displayCard = {displayCard} loginIn={loginIn} cards={cards} />
-            <About />
-          </div>
-        </Route>
+          <Route exact path="/">
+            <div  className="page__background_main">
+              <Header 
+                loginIn={loginIn} 
+                handleLogout={handleLogout} 
+                savedNews={savedNews} 
+                handleSavedNewsPage={handleSavedNewsPage}
+                handlePopupLogin={handlePopupLogin}
+                handleMainPage={handleMainPage}
+                isOpenLogin={isOpenLogin}
+                isOpenRegister={isOpenRegister}
+                handleClickMenu={handleClickMenu}
+                openBurger={openBurger}
+                userName={currentUser.name}
+              />
+              <Main CheckText={CheckText} searchNews={searchNews} />
+              <NewsCardList displayCard = {displayCard} loginIn={loginIn} cards={cards} token={token} keyword={keyword} savedCards={savedCards} handleAddCard={handleAddCard} />
+              <About />
+            </div>
+          </Route>
 
-        <ProtectedRoute path="/saved-news" loginIn={loginIn} >
-            <Header 
-              loginIn={loginIn} 
-              savedNews={savedNews}
-              handleLogout={handleLogout} 
-              handleSavedNewsPage={handleSavedNewsPage}
-              handleMainPage={handleMainPage}
-              isOpenLogin={isOpenLogin}
-              isOpenRegister={isOpenRegister}
-              handleClickMenu={handleClickMenu}
-              openBurger={openBurger}
-            />
-            <SavedNewsHeader number={5} />
-            <NewsCardList displayCard = {displayCard} loginIn={loginIn} savedNews={savedNews} />
-        </ProtectedRoute>
+          <ProtectedRoute path="/saved-news" loginIn={loginIn} >
+              <Header 
+                loginIn={loginIn} 
+                savedNews={savedNews}
+                handleLogout={handleLogout} 
+                handleSavedNewsPage={handleSavedNewsPage}
+                handleMainPage={handleMainPage}
+                isOpenLogin={isOpenLogin}
+                isOpenRegister={isOpenRegister}
+                handleClickMenu={handleClickMenu}
+                openBurger={openBurger}
+                userName={currentUser.name}
+              />
+              <SavedNewsHeader number={savedCards.length} userName={currentUser.name} />
+              <NewsCardList displayCard = {displayCard} loginIn={loginIn} cards={cards} token={token} savedNews={savedNews} savedCards={savedCards} handleDeleteCard={handleDeleteCard} />
+          </ProtectedRoute>
 
-        <Footer />
+          <Footer />
+        </div>
       </div>
-    </div>
+    </CurrentUserContext.Provider>
+    
   )
 }
 

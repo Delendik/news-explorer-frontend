@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './index.css';
 
-function SearchForm({onClick, CheckText}){
+function SearchForm({CheckText, searchNews}){
   const [searchText, setSearchText] = useState('');
   const [focusInput, setFocusInput] = useState(false);
   
@@ -20,13 +20,14 @@ function SearchForm({onClick, CheckText}){
   const handleSubmit = (e) => {
     e.preventDefault();
     CheckText(searchText);
+    searchNews(searchText);
   }
 
   return(
     <div className="search-form">
       <form className="search-form__container" onSubmit={handleSubmit}>
         <input className="searh-form__input" id="searh-form" placeholder="Введите тему новости" onChange={handleChange} onFocus={onFocus} onBlur={onBlur}></input>
-        <button className={focusInput ? "searh-form__button searh-form__button_active" : "searh-form__button"} onClick = {onClick}> Искать </button>
+        <button className={focusInput ? "searh-form__button searh-form__button_active" : "searh-form__button"}> Искать </button>
       </form>
     </div>
     

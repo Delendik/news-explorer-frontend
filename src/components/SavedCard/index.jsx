@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import './index.css';
+import * as MainApi from '../../utils/MainApi';
 
-function SavedCard({keyword, title, text, date, source, link, image, marked, loginIn}){
+function SavedCard({_id, keyword, title, text, date, source, link, image, marked, id, loginIn, token, handleDeleteCard}){
   const [markCard, setMarkCard] = useState(marked)
   const [saveInfo, setsaveInfo] = useState(false);
   
   const markedCard = () => {
-    setMarkCard(!markCard);
+      handleDeleteCard(_id)
   }
 
   const hoverMark = () => {

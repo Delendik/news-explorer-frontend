@@ -4,7 +4,7 @@ import Button from '../Button';
 import Menu from '../Menu';
 import {useLocation} from 'react-router-dom';
 
-function Navigation({loginIn, handleLogout, handleSavedNewsPage, savedNews, handleMainPage, handlePopupLogin, openBurger}){
+function Navigation({loginIn, handleLogout, handleSavedNewsPage, savedNews, handleMainPage, handlePopupLogin, openBurger, userName}){
   const location = useLocation();
 
   if (location.pathname === '/saved-news'){
@@ -21,6 +21,7 @@ function Navigation({loginIn, handleLogout, handleSavedNewsPage, savedNews, hand
             handleLogout={handleLogout} 
             savedNews={savedNews} 
             handlePopupLogin={handlePopupLogin}
+            userName={userName}
           />
       </nav>
     )
@@ -38,6 +39,7 @@ function Navigation({loginIn, handleLogout, handleSavedNewsPage, savedNews, hand
             handleLogout={handleLogout} 
             savedNews={savedNews} 
             handlePopupLogin={handlePopupLogin}
+            userName={userName}
           />
       </nav>
     )

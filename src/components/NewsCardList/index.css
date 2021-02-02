@@ -6,12 +6,18 @@
   margin-top: 64px;
 }
 
+.newCardList__emptyList{
+
+  text-align: center;
+
+}
+
 .newCardList__container_saved{
   padding: 0;
   margin: 0;
 }
 
-.newCardList__title{
+.newCardList__title, .newCardList__emptyList{
   font-family: Roboto Slab;
   font-style: normal;
   font-weight: normal;
