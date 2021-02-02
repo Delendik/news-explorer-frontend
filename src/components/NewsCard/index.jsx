@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import './index.css';
-import * as MainApi from '../../utils/MainApi';
 
 function NewCard({id, title, text, date, source, link, image, marked, loginIn, token, keyword, large, handleAddCard, handleDeleteCard, savedCards}){
-  let markCard = false
+  let markCard = false;
   const [saveInfo, setsaveInfo] = useState(false);
   const card = {keyword, title, text, date, source, link, image, marked};
   var dateToPrint = new Date(date);
@@ -15,39 +14,43 @@ function NewCard({id, title, text, date, source, link, image, marked, loginIn, t
     year: "numeric",
   }).format(dateToPrint))
 
-  
-
   const arrayForChecking = savedCards.map(item => {return `${item.title}-${item.source}`});
-  console.log('arrayForChecking', arrayForChecking)
-  // const cardId = savedCards.map(item => {return `${item.title}-${item.source}`});
-  const checkCards = arrayForChecking.includes(id)
+
+  const checkCards = arrayForChecking.includes(id);
   if(checkCards){
-    console.log('card', card)
     markCard = true;
+  };
+
+  const findId = (array, id) => {
+    const arrayWithId = array.map((item) => {
+      if(`${item.title}-${item.source}`===`${id}`){
+        return item._id;
+      } 
+      return 'null';
+    });
+    let resultId = ''
+    arrayWithId.forEach(element => {
+      if(element){
+        resultId = element;
+      }
+    });
+    return resultId;
   }
 
-  // const xxx = savedCards.map(item => {return item.source})
-// if(xxx){
-//   setMarkCard(true)
-// }
+  const resultID = findId(savedCards, id)
 
   const markedCard = () => {
     if(markCard){
-      console.log(card._id);
-      markCard = false;
+      handleDeleteCard(resultID);
     } else{
       if (card.image===null){
         card.image = 'https://photowords.ru/pics_max/images_2636.jpg'
         handleAddCard(card);
       }else{
         handleAddCard(card);
-        console.log(card)
       }
-      
-      markCard = true
+      markCard = !markCard
     }
-    
-    // setMarkCard(!markCard);
   }
 
   const hoverMark = () => {

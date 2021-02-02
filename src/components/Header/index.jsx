@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './index.css';
 import Navigation from '../Navigation';
 import {useLocation} from 'react-router-dom';
 
-function Header({ loginIn, handleLogout, handleSavedNewsPage, savedNews, handleMainPage, handlePopupLogin, isOpenLogin, isOpenRegister, handleClickMenu, openBurger, userName}){
+function Header({loginIn, handleLogout, handleSavedNewsPage, savedNews, handleMainPage, handlePopupLogin, isOpenLogin, isOpenRegister, handleClickMenu, openBurger, userName}){
   const location = useLocation();
 
   if (location.pathname === '/saved-news'){

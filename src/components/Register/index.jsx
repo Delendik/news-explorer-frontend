@@ -1,5 +1,4 @@
-import React, { useState, useEffect }  from 'react';
-import { Validation } from '../../utils/validation';
+import React, { useState }  from 'react';
 import PopupWithForm from '../PopupWithForm';
 import './index.css';
 

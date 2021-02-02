@@ -1,27 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './index.css';
 import SubmitButton from '../SubmitButton';
 
-function PopupWithForm({title, buttonName, childrenLink, closePopup, children, nameField, active, error, handleSubmit, handleChange}){
-  // const {name, password} = error
-  // const [email, setEmail] = useState('');
-
-  // const handleChangePassowrd = (e) =>{
-  //   setPassowrd(e.target.value)
-  // }
-
-  // const handleChangeEmail = (e) =>{
-  //   setEmail(e.target.value)
-  // }
-
-  // useEffect(() => {
-  //   if((email.length>2) && (password.length>2) && nameField){
-  //     setActive(true);
-  //   } else{
-  //     setActive(false);
-  //   }
-  // }, [email, password, nameField]);
-
+function PopupWithForm({title, buttonName, childrenLink, closePopup, children, active, error, handleSubmit, handleChange}){
   return(
     <div className="popup" >
       <div className="popup__overlay" onClick={closePopup} />

@@ -27,7 +27,6 @@ function App() {
   const [successRegister, setSuccessRegister] = useState(false);
   const [openBurger, setOpenBurger] = useState(false);
   const [successError, setSuccessError] = useState(false);
-  // const [cardsAfterRestart, setCardsAfterRestart] = useState([]);
   const cardsAfterRestart = (getLocalCards());
   const [cards, setCards] =  useState(cardsAfterRestart);
   const [displayCard, setDisplayCard] = useState(cardsAfterRestart.length>1 ? true : false);
@@ -38,11 +37,6 @@ function App() {
 
   const history = useHistory();
 
-  console.log('testCards', cards);
-
-  const unique = [...new Map(cards.map(item => [item['id'], item])).values()]
-
-  console.log('unique', unique);
   const checkToken = () =>{
     const token = getToken();
     if(!token){
@@ -52,8 +46,6 @@ function App() {
   }
 
   const token = checkToken();
-
-
 
   useEffect(() =>{
     checkToken();
@@ -153,10 +145,9 @@ function App() {
       setSuccessError(true);
     }
   }
-  console.log('setLocalCards', cards)
+
   useEffect(() => {
     window.onbeforeunload = () => {
-      
       setLocalCards(cards);
     }
   })
@@ -165,12 +156,13 @@ function App() {
     setLoading(true);
     try {
       const items = await apiNews.getCards(searchText, from, to)
-      setCards(items);
+      const uniqueItems = [...new Map(items.map(item => [item['id'], item])).values()]
+      setCards(uniqueItems);
       setDisplayCard(true);
       setKeyword(searchText);
     } catch (error) {
       console.log(error); 
-    }finally {setLoading(false); console.log(cards)}
+    }finally {setLoading(false)}
   }  
 
   const handleClickMenu = () =>{
@@ -301,7 +293,7 @@ function App() {
                 userName={currentUser.name}
               />
               <Main CheckText={CheckText} searchNews={searchNews} />
-              <NewsCardList displayCard = {displayCard} loginIn={loginIn} cards={cards} token={token} keyword={keyword} savedCards={savedCards} handleAddCard={handleAddCard} />
+              <NewsCardList displayCard = {displayCard} loginIn={loginIn} cards={cards} token={token} keyword={keyword} savedCards={savedCards} handleAddCard={handleAddCard} handleDeleteCard={handleDeleteCard} />
               <About />
             </div>
           </Route>
@@ -319,7 +311,7 @@ function App() {
                 openBurger={openBurger}
                 userName={currentUser.name}
               />
-              <SavedNewsHeader number={savedCards.length} userName={currentUser.name} />
+              <SavedNewsHeader number={savedCards.length} userName={currentUser.name} savedCards={savedCards} />
               <NewsCardList displayCard = {displayCard} loginIn={loginIn} cards={cards} token={token} savedNews={savedNews} savedCards={savedCards} handleDeleteCard={handleDeleteCard} />
           </ProtectedRoute>
 

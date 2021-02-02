@@ -4,17 +4,15 @@ import NewCard from '../NewsCard';
 import SavedCard from '../SavedCard';
 import MoreCardsButton from '../MoreCardsButton';
 
-function NewsCardList({displayCard, loginIn, savedNews, cards, token, keyword, savedCards, handleDeleteCard, handleAddCard}){
+function NewsCardList({displayCard, loginIn, savedNews, cards, token, savedCards, handleDeleteCard, handleAddCard}){
   const [numberForDisplay, setNumberForDisplay] = useState(3);
 
   const handleClick = () =>{
     setNumberForDisplay(numberForDisplay + 3);
   } 
-console.log('cards1:', cards)
-console.log('savedCards:', savedCards)
+
   const cardsForDisplay = cards.slice(0, numberForDisplay);
-  // const savedCards = cards.filter(card => card.marked)
-  console.log('cardsForDisplay:', cardsForDisplay)
+
   if(savedNews){
     if(savedCards.length<1){
       return(<></>);
@@ -41,7 +39,7 @@ console.log('savedCards:', savedCards)
           <h2 className="newCardList__title">Результаты поиска</h2>
           <ul className="newCardList__table">
             {
-              cardsForDisplay.map(card => <NewCard key={`${card.title}-${card.source}`} {...card} loginIn={loginIn} token={token}  handleAddCard={handleAddCard} handleDeleteCard={handleDeleteCard} savedCards={savedCards} />) 
+              cardsForDisplay.map(card => <NewCard key={`${card.title}-${card.source}`} {...card} loginIn={loginIn} token={token} handleAddCard={handleAddCard} handleDeleteCard={handleDeleteCard} savedCards={savedCards} />) 
             }
           </ul>
           <MoreCardsButton onClick = {handleClick} />
