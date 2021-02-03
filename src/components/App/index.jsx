@@ -27,7 +27,7 @@ function App() {
   const [successRegister, setSuccessRegister] = useState(false);
   const [openBurger, setOpenBurger] = useState(false);
   const [successError, setSuccessError] = useState(false);
-  const cardsAfterRestart = (getLocalCards());
+  let cardsAfterRestart = getLocalCards() ? getLocalCards() : [];
   const [cards, setCards] =  useState(cardsAfterRestart);
   const [displayCard, setDisplayCard] = useState(cardsAfterRestart.length>1 ? true : false);
   const [loadind, setLoading] = useState(false);
@@ -111,7 +111,6 @@ function App() {
 
   const onLogin = ({email, password}) =>{
     setLoading(true);
-    
     MainApi.authorize({email, password})
     .then((res) => {
     setLoginIn(true);
