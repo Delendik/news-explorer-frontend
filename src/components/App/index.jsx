@@ -81,7 +81,7 @@ function App() {
         console.log("ошибка на сервере");
       }
     });
-  }, [])
+  }, [loginIn])
   
   const onRegister = ({email, password, name}) =>{
     setLoading(true);
@@ -124,7 +124,6 @@ function App() {
     .finally(
       setLoading(false)
     )
-
   }
 
   var today = new Date();
