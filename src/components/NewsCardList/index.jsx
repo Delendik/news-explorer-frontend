@@ -3,12 +3,14 @@ import './index.css';
 import NewCard from '../NewsCard';
 import SavedCard from '../SavedCard';
 import MoreCardsButton from '../MoreCardsButton';
+import { numberOfCards } from '../../utils/constatnts';
+
 
 function NewsCardList({displayCard, loginIn, savedNews, cards, token, savedCards, handleDeleteCard, handleAddCard, handlePopupLogin}){
-  const [numberForDisplay, setNumberForDisplay] = useState(3);
+  const [numberForDisplay, setNumberForDisplay] = useState(numberOfCards);
 
   const handleClick = () =>{
-    setNumberForDisplay(numberForDisplay + 3);
+    setNumberForDisplay(numberForDisplay + numberOfCards);
   } 
 
   const cardsForDisplay = cards.slice(0, numberForDisplay);

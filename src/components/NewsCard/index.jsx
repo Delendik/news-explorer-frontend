@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import './index.css';
 
-function NewCard({id, title, text, date, source, link, image, marked, loginIn, token, keyword, large, handleAddCard, handleDeleteCard, savedCards, handlePopupLogin}){
+function NewCard({id, title, text, date, source, link, image, marked, loginIn, keyword, handleAddCard, handleDeleteCard, savedCards, handlePopupLogin}){
   let markCard = false;
   const [saveInfo, setsaveInfo] = useState(false);
   const card = {keyword, title, text, date, source, link, image, marked};
-  var dateToPrint = new Date(date);
+  const dateToPrint = new Date(date);
   
-  let newFormatDate = (new Intl.DateTimeFormat("ru", {
+  const newFormatDate = (new Intl.DateTimeFormat("ru", {
     month: "long",
     day: "numeric"
   }).format(dateToPrint) + ', ' + new Intl.DateTimeFormat("ru", {

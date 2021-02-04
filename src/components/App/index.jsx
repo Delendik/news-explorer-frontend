@@ -18,6 +18,7 @@ import * as MainApi from '../../utils/MainApi';
 import { getToken, removeToken } from '../../utils/token';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import { getLocalCards, setLocalCards } from '../../utils/cards';
+import { days } from '../../utils/constatnts';
 
 function App() {
   const [loginIn, setLoginIn] = useState(false);
@@ -132,7 +133,7 @@ function App() {
   let dayToday = today.getDate()
   var to = (yearToday+'-'+monthToday+'-'+dayToday)
   var beforedate = new Date();
-  beforedate.setDate(beforedate.getDate() - 7);
+  beforedate.setDate(beforedate.getDate() - days);
   let yearBefore = beforedate.getFullYear()
   let monthBefore = (beforedate.getMonth()+1)
   let dayBefore = beforedate.getDate()
