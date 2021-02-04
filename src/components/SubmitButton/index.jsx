@@ -1,9 +1,9 @@
 import React from 'react';
 import './index.css';
 
-function SubmitButton({name, width, onClick, active}){
+function SubmitButton({name, width, active}){
   return(
-      <button className="submit-button" style={{width:width}} onClick={onClick} disabled={!active ? "disabled" : ""}>{name}</button>
+      <button className="submit-button" style={{width:width}} disabled={!active ? "disabled" : ""}>{name}</button>
   )
 }
 

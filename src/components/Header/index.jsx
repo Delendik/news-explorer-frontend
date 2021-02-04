@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './index.css';
 import Navigation from '../Navigation';
 import {useLocation} from 'react-router-dom';
 
-function Header({ loginIn, handleLogout, handleSavedNewsPage, savedNews, handleMainPage, handlePopupLogin, isOpenLogin, isOpenRegister, handleClickMenu, openBurger}){
+function Header({loginIn, handleLogout, handleSavedNewsPage, savedNews, handleMainPage, handlePopupLogin, isOpenLogin, isOpenRegister, handleClickMenu, openBurger, userName}){
   const location = useLocation();
 
   if (location.pathname === '/saved-news'){
@@ -20,6 +20,7 @@ function Header({ loginIn, handleLogout, handleSavedNewsPage, savedNews, handleM
           handleMainPage={handleMainPage}
           handlePopupLogin={handlePopupLogin}
           openBurger={openBurger}
+          userName={userName}
         />
         <div className={openBurger ? "header__burger_active header__burger header__burger_saved" : "header__burger header__burger_saved"} onClick={handleClickMenu} />
       </header>
@@ -38,6 +39,7 @@ function Header({ loginIn, handleLogout, handleSavedNewsPage, savedNews, handleM
           handleMainPage={handleMainPage}
           handlePopupLogin={handlePopupLogin}
           openBurger={openBurger}
+          userName={userName}
         />
         <div className={openBurger ? "header__burger_active header__burger" : "header__burger"} onClick={handleClickMenu} />
       </header>

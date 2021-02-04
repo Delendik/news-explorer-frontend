@@ -1,27 +1,34 @@
 import React, { useState } from 'react';
 import './index.css';
 
-function SearchForm({onClick}){
+function SearchForm({CheckText, searchNews}){
   const [searchText, setSearchText] = useState('');
+  const [focusInput, setFocusInput] = useState(false);
   
   function handleChange(e){
     setSearchText(e.target.value);
   }
 
   const onFocus =()=> {
-    setSearchText(true)
+    setFocusInput(true)
   }
 
   const onBlur =()=> {
-    setSearchText(false)
+    setFocusInput(false)
   }
   
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    CheckText(searchText);
+    searchNews(searchText);
+  }
+
   return(
     <div className="search-form">
-      <div className="search-form__container">
-        <input className="searh-form__input" placeholder="Введите тему новости" required onChange={handleChange} onFocus={onFocus} onBlur={onBlur}></input>
-      </div>
-      <button className={searchText ? "searh-form__button searh-form__button_active" : "searh-form__button"} onClick = {onClick}> Искать </button>
+      <form className="search-form__container" onSubmit={handleSubmit}>
+        <input className="searh-form__input" id="searh-form" placeholder="Введите тему новости" onChange={handleChange} onFocus={onFocus} onBlur={onBlur}></input>
+        <button className={focusInput ? "searh-form__button searh-form__button_active" : "searh-form__button"}> Искать </button>
+      </form>
     </div>
     
   )

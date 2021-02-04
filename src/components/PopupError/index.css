@@ -1,0 +1,101 @@
+.popupError{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  visibility: hidden;
+}
+
+.popupError_opened{
+  visibility: visible;
+}
+
+.popupError__overlay{
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.popupError__container{
+  max-width: 430px;
+  width: 100%;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  background: #FFFFFF;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 34px 36px 28px;
+  position: relative;
+  z-index: 5;
+}
+
+.popupError__title{
+  width: 315px;
+  margin: 0 0 14px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 28px;
+  color: #1A1B22;
+}
+
+.popupError__link{
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  color: #2F71E5;
+  border: none;
+  background-color: transparent;
+  align-self: flex-start;
+  padding: 0;
+}
+
+.popupError__close{
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: -46px;
+  right: -46px;
+  background-image: url('../../images/close.svg');
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+@-webkit-keyframes transparency{
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0.9;
+  }
+}
+
+@keyframes transparency{
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0.9;
+  }
+}
+
+.popupError__close:hover, .popupError__link:hover{
+  cursor: url('../../images/lapka.svg'), pointer;
+  -webkit-animation: transparency 1s linear 1 forwards;
+          animation: transparency 1s linear 1 forwards;
+}

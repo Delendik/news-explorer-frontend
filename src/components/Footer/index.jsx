@@ -10,13 +10,13 @@ function Footer(){
       <div className="footer__links">
         <div className="footer__mainLinks">
           <a className="footer__link" href="#">Главная</a>
-          <a className="footer__link" href="https://praktikum.yandex.ru/"  target="_blank">Яндекс.Практикум</a>
+          <a className="footer__link" href="https://praktikum.yandex.ru/"  target="_blank" rel="noreferrer">Яндекс.Практикум</a>
         </div>
         <div className="footer__logos">
-          <a className="footer__logoLink_first" href="https://github.com/Delendik/" target="_blank">
+          <a className="footer__logoLink_first" href="https://github.com/Delendik/" target="_blank" rel="noreferrer">
             <img src={logoGit} className="footer__logo" alt="логотип Гита" />
           </a>
-          <a className="footer__logoLink_last" href="https://www.facebook.com/" target="_blank">
+          <a className="footer__logoLink_last" href="https://www.facebook.com/" target="_blank" rel="noreferrer">
             <img src={logoFacebook} className="footer__logo" alt="логотип Фейсбука" /> 
           </a>
         </div>

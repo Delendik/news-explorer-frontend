@@ -1,14 +1,9 @@
 import React from 'react';
 import './index.css';
 
-function Preloader(){
-
-  setTimeout(function(){
-    document.getElementById('preloader').style.visibility = 'hidden';
-  }, 2000);
-
+function Preloader({loadind}){
   return(
-    <div className="preloader__container" id="preloader" >
+    <div className={loadind ? "preloader__container preloader__container_visible" : "preloader__container"} id="preloader" >
       <i className="circle-preloader"></i>
     </div>
   )

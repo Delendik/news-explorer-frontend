@@ -1,22 +1,42 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState }  from 'react';
 import PopupWithForm from '../PopupWithForm';
 import './index.css';
 
-function Register({handlePopupLogin, isOpenRegister, closePopup, onClick}){
-  const [name, setName] = useState('');
-  const [nameField, setNameField] = useState(false);
+function Register({handlePopupLogin, isOpenRegister, closePopup, onRegister}){
+  const [data, setData] = useState({
+    email: '',
+    password: '',
+    name:'',
+  });
+  const [active, setActive] = useState(false)
+  const [error, setError] = useState('')
 
-  const handleChangeName = (e) =>{
-    setName(e.target.value)
+  const handleChange = (e) =>{
+    const {name, value} = e.target;
+    setData({
+      ...data, 
+      [name]: value,
+    });
+    setError({
+      ...error, 
+      [name]: e.target.validationMessage,
+    });
+    setActive(e.target.closest("form").checkValidity());
+    return (setData, setError, setActive);
   }
 
-  useEffect(() => {
-    if(name){
-      setNameField(true);
-    }else{
-      setNameField(false);
-    }
-  }, [name]);
+  const updateForm = () =>{
+    const {email, password, name} = data;
+    email.value =  ''
+    password.value =  ''
+    name.value =  ''
+  }
+
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+    const {email, password, name} = data;
+    onRegister({email, password, name, updateForm});
+  }  
 
   return(
     <div className={isOpenRegister ? "register__container register__container_opened" : "register__container"}>
@@ -31,21 +51,23 @@ function Register({handlePopupLogin, isOpenRegister, closePopup, onClick}){
           <div>
             <p className="popup__label">Имя</p>
             <input 
-              type="email" 
+              type="text" 
               placeholder="Введите своё имя"
-              value={name} 
               className="popup__input" 
               id="name-input" 
+              name="name"
               required 
               minLength="2" 
               maxLength="30" 
-              onChange={handleChangeName} 
+              onChange={handleChange} 
             />
-            <span className="popup__input_error" id="email-input-error"></span>
+            <span className="popup__input_error" id="name-input-error">{error.name}</span>
           </div>
         }
-        nameField={nameField}
-        onClick={onClick}
+        active={active}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        error={error}
       />
     </div>
   )  
