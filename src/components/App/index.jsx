@@ -291,12 +291,12 @@ function App() {
                 userName={currentUser.name}
               />
               <Main CheckText={CheckText} searchNews={searchNews} />
-              <NewsCardList displayCard = {displayCard} loginIn={loginIn} cards={cards} token={token} keyword={keyword} savedCards={savedCards} handleAddCard={handleAddCard} handleDeleteCard={handleDeleteCard} />
+              <NewsCardList displayCard = {displayCard} loginIn={loginIn} cards={cards} token={token} keyword={keyword} savedCards={savedCards} handleAddCard={handleAddCard} handleDeleteCard={handleDeleteCard} handlePopupLogin={handlePopupLogin} />
               <About />
             </div>
           </Route>
 
-          <ProtectedRoute path="/saved-news" loginIn={loginIn} >
+          <ProtectedRoute path="/saved-news" loginIn={loginIn} handlePopupLogin={handlePopupLogin} >
               <Header 
                 loginIn={loginIn} 
                 savedNews={savedNews}

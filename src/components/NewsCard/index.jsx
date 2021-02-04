@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './index.css';
 
-function NewCard({id, title, text, date, source, link, image, marked, loginIn, token, keyword, large, handleAddCard, handleDeleteCard, savedCards}){
+function NewCard({id, title, text, date, source, link, image, marked, loginIn, token, keyword, large, handleAddCard, handleDeleteCard, savedCards, handlePopupLogin}){
   let markCard = false;
   const [saveInfo, setsaveInfo] = useState(false);
   const card = {keyword, title, text, date, source, link, image, marked};
@@ -84,7 +84,7 @@ if(loginIn){
         <div className="card__saveInfo" style={ saveInfo ? {display:  'flex' } : {display:  'none'}}>
           <p className="card__saveTitle">Войдите, чтобы сохранять статьи</p>
         </div>
-        <div className=" card__mark card__unmarked"  onMouseOver={hoverMark} onMouseOut={hoverMarkOut} />
+        <div className=" card__mark card__unmarked"  onMouseOver={hoverMark} onMouseOut={hoverMarkOut} onClick={handlePopupLogin} />
       </div>
       <div className="card__down">
         <p className="card__date">{newFormatDate}</p>

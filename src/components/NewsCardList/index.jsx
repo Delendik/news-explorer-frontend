@@ -4,7 +4,7 @@ import NewCard from '../NewsCard';
 import SavedCard from '../SavedCard';
 import MoreCardsButton from '../MoreCardsButton';
 
-function NewsCardList({displayCard, loginIn, savedNews, cards, token, savedCards, handleDeleteCard, handleAddCard}){
+function NewsCardList({displayCard, loginIn, savedNews, cards, token, savedCards, handleDeleteCard, handleAddCard, handlePopupLogin}){
   const [numberForDisplay, setNumberForDisplay] = useState(3);
 
   const handleClick = () =>{
@@ -39,7 +39,7 @@ function NewsCardList({displayCard, loginIn, savedNews, cards, token, savedCards
           <h2 className="newCardList__title">Результаты поиска</h2>
           <ul className="newCardList__table">
             {
-              cardsForDisplay.map(card => <NewCard key={`${card.title}-${card.source}`} {...card} loginIn={loginIn} token={token} handleAddCard={handleAddCard} handleDeleteCard={handleDeleteCard} savedCards={savedCards} />) 
+              cardsForDisplay.map(card => <NewCard key={`${card.title}-${card.source}`} {...card} loginIn={loginIn} token={token} handleAddCard={handleAddCard} handleDeleteCard={handleDeleteCard} savedCards={savedCards} handlePopupLogin={handlePopupLogin} />) 
             }
           </ul>
           <MoreCardsButton onClick = {handleClick} />
